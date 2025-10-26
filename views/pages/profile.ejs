@@ -467,6 +467,73 @@
                     });
                 </script>
                 <script src="/js/log.js"></script>
+
+<% if (user && user.id === profileUser.id) { %>
+<div class="profile-settings" style="margin-top: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+    <h3>Profile Settings</h3>
+    
+    <div class="setting-group" style="margin-bottom: 20px;">
+        <h4>Update Avatar</h4>
+        <input type="text" id="avatarUrl" placeholder="Enter avatar URL" class="form-input" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        <button onclick="updateAvatar()" class="btn btn-primary" style="background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Update Avatar</button>
+    </div>
+    
+    <div class="setting-group">
+        <h4>Update Banner</h4>
+        <input type="text" id="bannerUrl" placeholder="Enter banner URL" class="form-input" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        <button onclick="updateBanner()" class="btn btn-primary" style="background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Update Banner</button>
+    </div>
+</div>
+
+<script>
+async function updateAvatar() {
+    const url = document.getElementById('avatarUrl').value;
+    if (!url) return alert('Please enter URL');
+    
+    try {
+        const response = await fetch('/profile-settings/update-avatar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ avatarUrl: url })
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            alert('Avatar updated!');
+            location.reload();
+        } else {
+            alert('Error: ' + result.error);
+        }
+    } catch (error) {
+        alert('Error updating avatar');
+    }
+}
+
+async function updateBanner() {
+    const url = document.getElementById('bannerUrl').value;
+    if (!url) return alert('Please enter URL');
+    
+    try {
+        const response = await fetch('/profile-settings/update-banner', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bannerUrl: url })
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            alert('Banner updated!');
+            location.reload();
+        } else {
+            alert('Error: ' + result.error);
+        }
+    } catch (error) {
+        alert('Error updating banner');
+    }
+}
+</script>
+<% } %>
+
 </body>
 
 </html>
