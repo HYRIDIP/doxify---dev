@@ -8,6 +8,8 @@ const passport = require('passport');
 const fileUpload = require('express-fileupload');
 const sqlite3 = require('sqlite3').verbose();
 const app = express();
+const { trackOnlineUser, getOnlineCount } = require('./onlineTracker');
+const profileSettingsRoutes = require('./routes/profile-settings');
 
 // Set view engine to ejs
 app.set('view engine', 'ejs');
@@ -24,6 +26,11 @@ app.use(session({
     saveUninitialized: false,
     cookie: { secure: false } // Use 'secure: true' if using HTTPS
 }));
+app.use((req, res, next) => {
+    trackOnlineUser(req);
+    res.locals.onlineCount = getOnlineCount();
+    next();
+});
 const corsOptions = {
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -36,7 +43,7 @@ app.use(cors(corsOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+app.use('/profile-settings', profileSettingsRoutes);
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
     done(null, user);
@@ -45,6 +52,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
     done(null, user);
 });
+
 
 // Database setup
 const db = new sqlite3.Database('./database/pastebin.db', (err) => {
