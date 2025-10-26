@@ -24,6 +24,8 @@ function initializeDatabase() {
                     username TEXT NOT NULL,
                     email TEXT NOT NULL,
                     joined_at TEXT NOT NULL
+                    avatar_url TEXT,
+                    banner_url TEXT,
                 )
             `);
 
