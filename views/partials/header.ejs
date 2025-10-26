@@ -4,6 +4,10 @@
     <title>Doxify</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+    <div class="online-indicator" style="display: flex; align-items: center; gap: 8px; color: #666; font-size: 14px; margin-left: auto;">
+        <span class="online-dot" style="width: 8px; height: 8px; background-color: #4CAF50; border-radius: 50%; animation: pulse 2s infinite;"></span>
+        <span class="online-count"><%= typeof onlineCount !== 'undefined' ? onlineCount : 0 %> online</span>
+    </div>
 <script src=" https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -16,3 +20,11 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/Media/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/Media/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/Media/android-chrome-512x512.png">
+
+<style>
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+</style>
