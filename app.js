@@ -9,7 +9,8 @@ const fileUpload = require('express-fileupload');
 const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const { trackOnlineUser, getOnlineCount } = require('./onlineTracker');
-const profileSettingsRoutes = require('./routes/profile-settings');
+const profileRoutes = require('./routes/profile');
+app.use('/profile', profileRoutes);
 
 // Set view engine to ejs
 app.set('view engine', 'ejs');
